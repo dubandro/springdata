@@ -51,4 +51,10 @@ public class MainController {
     public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
     }
+
+    @PostMapping("/products/{id}/newprice/{newPrice}")
+    public ProductDto changePrice(@PathVariable Long id, @PathVariable double newPrice) {
+        productService.changePrice(id, newPrice);
+        return new ProductDto(productService.findById(id).get());
+    }
 }

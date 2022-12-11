@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.springdata.model.Product;
 import ru.geekbrains.springdata.repositories.ProductRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,9 @@ public class ProductService {
 
     public List<Product> findAll(Double minPrice, Double maxPrice) {
         if (minPrice == null && maxPrice == null) return productRepository.findAll();
-        else return productRepository.findAllByPriceBetween(minPrice, maxPrice);
+        if (minPrice == null) return productRepository.findAllByPriceIsLessThan(maxPrice);
+        if (maxPrice == null) return productRepository.findAllByPriceIsGreaterThan(minPrice);
+        return productRepository.findAllByPriceBetween(minPrice, maxPrice);
     }
 
     public Optional<Product> findById(Long id) {
@@ -28,5 +31,11 @@ public class ProductService {
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void changePrice(Long id, double newPrice) {
+        Product product = productRepository.findById(id).orElseThrow();
+        product.setPrice(newPrice);
     }
 }
