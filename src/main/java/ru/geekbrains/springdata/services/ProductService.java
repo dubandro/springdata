@@ -13,12 +13,20 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
 
-
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public List<Product> findAll(Double minPrice, Double maxPrice) {
+        if (minPrice == null && maxPrice == null) return productRepository.findAll();
+        else return productRepository.findAllByPriceBetween(minPrice, maxPrice);
     }
 
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
+    }
+
+    public void save(Product product) {
+        productRepository.save(product);
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
     }
 }

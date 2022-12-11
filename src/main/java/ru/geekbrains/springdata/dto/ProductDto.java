@@ -9,7 +9,7 @@ import ru.geekbrains.springdata.model.Product;
 public class ProductDto {
     private Long id;
     private String title;
-    private int price;
+    private double price;
     private String categoryTitle;
 
     public ProductDto(Product product) {

@@ -1,8 +1,10 @@
 package ru.geekbrains.springdata.model;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
@@ -18,7 +20,7 @@ public class Product {
     private String title;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
